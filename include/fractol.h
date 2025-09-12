@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:11:11 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/12 06:11:13 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/12 06:32:55 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 
 # define WIDTH 800
 # define HEIGHT 800
+
+typedef struct	s_complex
+{
+	double x;
+	double y;
+}				t_complex;
 
 typedef struct	s_img
 {
