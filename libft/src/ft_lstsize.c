@@ -6,11 +6,11 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:06:13 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/24 22:31:24 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/12 04:16:14 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 int	ft_lstsize(t_list *lst)
 {

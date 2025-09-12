@@ -6,11 +6,11 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:36:06 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/22 14:37:58 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/12 04:15:32 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 static int	ft_numlen(int n)
 {

@@ -6,11 +6,11 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:07:04 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/20 19:41:05 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/12 04:16:23 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {

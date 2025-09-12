@@ -6,11 +6,11 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:06:43 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/25 00:55:39 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/12 04:14:06 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 int	ft_isascii(int c)
 {

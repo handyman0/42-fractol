@@ -6,11 +6,11 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:36:37 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/07/25 00:56:14 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/12 04:16:54 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 static int	count_words(const char *s, char c)
 {
