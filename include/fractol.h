@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:11:11 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/17 06:58:26 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/17 08:52:02 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 # define ERROR_MESSAGE "Please enter \n\t ./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
 
@@ -31,15 +33,10 @@
 # define GREEN 0x00FF00
 # define BLUE 0x0000FF
 
-# define NEON_PINK 0xFF6EC7
 # define NEON_GREEN 0x39FF14
 # define NEON_BLUE 0x1F51FF
-# define HOT_PINK 0xFF69B4
 # define LIME 0xBFFF00
-# define ELECTRIC_PURPLE 0xBF00FF
-# define TURQUOISE 0x40E0D0
 # define GOLD 0xFFD700
-# define DEEP_SKY 0x00BFFF
 # define PSYCHEDELIC_PURPLE 0X660066
 
 typedef struct	s_complex
@@ -65,6 +62,8 @@ typedef struct	s_fractal
 	t_img	img;
 	double	escape_value;
 	int		iterations_definition;
+	double	shift_x;
+	double	shift_y;
 }				t_fractal;
 
 void		fractal_init(t_fractal *fractal);
@@ -72,5 +71,7 @@ void		fractal_render(t_fractal *fractal);
 double		map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
 t_complex	sum_complex(t_complex z1, t_complex z2);
 t_complex	square_complex(t_complex z);
+int			key_handler(int keysym, t_fractal *fractal);
+int			close_handler(t_fractal *fractal);
 
 #endif
