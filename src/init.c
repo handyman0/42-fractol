@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:10:57 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/12 06:10:59 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/17 06:45:31 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@ static void	malloc_error(void)
 {
 	perror("Problems with malloc");
 	exit(EXIT_FAILURE);
+}
+static void	data_init(t_fractal *fractal)
+{
+	fractal->escape_value = 4;
+	fractal->iterations_definition = 42;
+}
+
+static void	events_init(t_fractal *fractal)
+{
+	mlx_key_hook(fractal->mlx_window, NULL, NULL);
+	mlx_mouse_hook(fractal->mlx_window, NULL, NULL);
+	mlx_hook(fractal->mlx_window, 17, 0, NULL, NULL);
 }
 
 void	fractal_init(t_fractal *fractal)
@@ -39,4 +51,6 @@ void	fractal_init(t_fractal *fractal)
 		malloc_error();
 	}
 	fractal->img.pixel_ptr = mlx_get_data_addr(fractal->img.img_ptr, &fractal->img.bpp, &fractal->img.line_len, &fractal->img.endian);
+	events_init(fractal);
+	data_init(fractal);
 }
