@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:10:50 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/17 06:27:26 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/17 08:40:59 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	z.x = 0.0;
 	z.y = 0.0;
 
-	c.x = map(x, -2, +2, 0, WIDTH);
-	c.y = map(y, +2, -2, 0, HEIGHT);
+	c.x = map(x, -2, +2, 0, WIDTH) + fractal->shift_x;
+	c.y = map(y, +2, -2, 0, HEIGHT) + fractal->shift_y;
 
 	while (i < fractal->iterations_definition)
 	{
