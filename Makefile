@@ -5,19 +5,19 @@
 #                                                     +:+ +:+         +:+      #
 #    By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/13 16:34:59 by lmelo-do          #+#    #+#              #
-#    Updated: 2025/09/12 04:46:50 by lmelo-do         ###   ########.fr        #
+#    Created: 2025/09/17 05:20:06 by lmelo-do          #+#    #+#              #
+#    Updated: 2025/09/17 06:28:39 by lmelo-do         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME    = fractol
+NAME = fractol
 
 SRC_DIR = src
 INC_DIR = include
 LIBFT_DIR = libft
 MLX_DIR = minilibx-linux
 
-SRC = $(wildcard $(SRC_DIR)/*.c)
+SRC = $(wildcard $(SRC_DIR)/*.c) # remove wildcard and use explicit files #
 OBJS = $(SRC:.c=.o)
 CC  = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)/include -I$(MLX_DIR)
@@ -40,7 +40,7 @@ ${MLX}:
 	${MAKE} -C ${MLX_DIR}
 
 valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all ./${NAME} mandelbrot
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./${NAME} mandelbrot
 
 gdb: ${NAME}
 	gdb ./${NAME}
