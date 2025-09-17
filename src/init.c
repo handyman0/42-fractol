@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:10:57 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/17 06:45:31 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/17 08:42:12 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ static void	data_init(t_fractal *fractal)
 {
 	fractal->escape_value = 4;
 	fractal->iterations_definition = 42;
+	fractal->shift_x = 0.0;
+	fractal->shift_y = 0.0;
 }
 
 static void	events_init(t_fractal *fractal)
 {
-	mlx_key_hook(fractal->mlx_window, NULL, NULL);
-	mlx_mouse_hook(fractal->mlx_window, NULL, NULL);
-	mlx_hook(fractal->mlx_window, 17, 0, NULL, NULL);
+	mlx_hook(fractal->mlx_window, KeyPress, KeyPressMask, key_handler, fractal);
+	mlx_hook(fractal->mlx_window, ButtonPress, ButtonPressMask, mouse_handler, fractal);
+	mlx_hook(fractal->mlx_window, DestroyNotify, StructureNotifyMask, close_handler, fractal);
 }
 
 void	fractal_init(t_fractal *fractal)
