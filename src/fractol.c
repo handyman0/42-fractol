@@ -15,10 +15,18 @@
 int main(int argc, char **argv)
 {
 	t_fractal	fractal;
-	if ((2 == argc && !ft_strncmp(argv[1], "mandelbrot", 10))
-		|| (4 == argc && !ft_strncmp(argv[1], "julia", 5)))
+	if (2 == argc && !ft_strncmp(argv[1], "mandelbrot", 10))
 	{
-		fractal.name = argv[1];
+		fractal.name = "mandelbrot";
+		fractal_init(&fractal);
+		fractal_render(&fractal);
+		mlx_loop(fractal.mlx_connection);
+	}
+	else if (4 == argc && !ft_strncmp(argv[1], "julia", 5))
+	{
+		fractal.name = "julia";
+		fractal.julia_x = ft_atodbl(argv[2]);
+		fractal.julia_y = ft_atodbl(argv[3]);
 		fractal_init(&fractal);
 		fractal_render(&fractal);
 		mlx_loop(fractal.mlx_connection);
