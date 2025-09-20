@@ -24,8 +24,8 @@
 
 # define ERROR_MESSAGE "Please enter \n\t ./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
 
-# define WIDTH 1200
-# define HEIGHT 1200
+# define WIDTH 800
+# define HEIGHT 800
 
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF

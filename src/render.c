@@ -36,29 +36,32 @@ static void mandel_or_julia(t_complex *z, t_complex *c, t_fractal *fractal)
 
 static void	handle_pixel(int x, int y, t_fractal *fractal)
 {
-	t_complex	z;
-	t_complex	c;
-	int			i;
-	int			color;
-
-	i = 0;
+	t_complex z, c;
+	int color = WHITE;
+	double zx, zy, zx2, zy2;
+	int i = 0;
 
 	z.x = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
 	z.y = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
 
 	mandel_or_julia(&z, &c, fractal);
-	while (i < fractal->iterations_definition)
+
+	zx = z.x;
+	zy = z.y;
+	zx2 = zx * zx;
+	zy2 = zy * zy;
+
+	while (i < fractal->iterations_definition && (zx2 + zy2) <= fractal->escape_value)
 	{
-		z = sum_complex(square_complex(z), c);
-		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
-		{
-			color = map(i, BLACK, WHITE, 0, fractal->iterations_definition);
-			my_pixel_put(x, y, &fractal->img, color);
-			return ;
-		}
+		zy = 2 * zx * zy + c.y;
+		zx = zx2 - zy2 + c.x;
+		zx2 = zx * zx;
+		zy2 = zy * zy;
 		++i;
 	}
-	my_pixel_put(x, y, &fractal->img, WHITE);
+	if (i < fractal->iterations_definition)
+		color = map(i, BLACK, WHITE, 0, fractal->iterations_definition);
+	my_pixel_put(x, y, &fractal->img, color);
 }
 
 void	fractal_render(t_fractal *fractal)
