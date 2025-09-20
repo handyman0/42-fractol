@@ -18,13 +18,14 @@
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 
 # define ERROR_MESSAGE "Please enter \n\t ./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
 
-# define WIDTH 2400
-# define HEIGHT 2400
+# define WIDTH 1200
+# define HEIGHT 1200
 
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
@@ -64,6 +65,8 @@ typedef struct	s_fractal
 	double	shift_x;
 	double	shift_y;
 	double	zoom;
+	double	julia_x;
+	double	julia_y;
 }				t_fractal;
 
 void		fractal_init(t_fractal *fractal);
@@ -74,5 +77,6 @@ t_complex	square_complex(t_complex z);
 int			key_handler(int keysym, t_fractal *fractal);
 int			close_handler(t_fractal *fractal);
 int			mouse_handler(int button, int x, int y, t_fractal *fractal);
+int			julia_track(int x, int y, t_fractal *fractal);
 
 #endif
