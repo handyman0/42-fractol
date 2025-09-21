@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:10:57 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/17 08:49:35 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/21 06:06:42 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ int	close_handler(t_fractal *fractal)
 
 int	key_handler(int keysym, t_fractal *fractal)
 {
-	if (keysym == XK_Escape)
+	if (keysym == KEY_ESC)
 		close_handler(fractal);
-	else if (keysym == XK_Left)
+	else if (keysym == KEY_LEFT)
 		fractal->shift_x += (0.5 * fractal->zoom);
-	else if (keysym == XK_Right)
+	else if (keysym == KEY_RIGHT)
 		fractal->shift_x -= (0.5 * fractal->zoom);
-	else if (keysym == XK_Up)
+	else if (keysym == KEY_UP)
 		fractal->shift_y -= (0.5 * fractal->zoom);
-	else if (keysym == XK_Down)
+	else if (keysym == KEY_DOWN)
 		fractal->shift_y += (0.5 * fractal->zoom);
-	else if (keysym == XK_plus)
+	else if (keysym == KEY_PLUS)
 		fractal->iterations_definition += 10;
-	else if (keysym == XK_minus)
+	else if (keysym == KEY_MINUS)
 		fractal->iterations_definition -= 10;
 	fractal_render(fractal);
 	return (0);
