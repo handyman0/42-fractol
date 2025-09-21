@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:11:11 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/17 08:52:02 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/21 06:04:38 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,37 @@
 # define WIDTH 800
 # define HEIGHT 800
 
-# define BLACK 0x000000
-# define WHITE 0xFFFFFF
-# define RED 0xFF0000
-# define GREEN 0x00FF00
-# define BLUE 0x0000FF
+# define BLACK               0x000000
+# define WHITE               0xFFFFFF
+# define RED                 0xFF0000
+# define GREEN               0x00FF00
+# define BLUE                0x0000FF
 
-# define NEON_GREEN 0x39FF14
-# define NEON_BLUE 0x1F51FF
-# define LIME 0xBFFF00
-# define GOLD 0xFFD700
-# define PSYCHEDELIC_PURPLE 0X660066
+# define NEON_GREEN           0x39FF14
+# define NEON_BLUE            0x1F51FF
+# define LIME                 0xBFFF00
+# define GOLD                 0xFFD700
+# define PSYCHEDELIC_PURPLE   0x660066
+# define HOT_PINK             0xFF69B4
+# define CYAN                 0x00FFFF
+# define ORANGE               0xFF5F1F
+# define VIVID_YELLOW         0xF7FF00
+# define ELECTRIC_INDIGO      0x6F00FF
+# define ACID_GREEN           0xB0FF1F
+# define NEON_ORANGE          0xFF6E00
+# define ULTRA_PINK           0xFF007F
+# define TURQUOISE            0x40E0D0
+# define TRIPPY_MAGENTA       0xFF00FF
+# define COSMIC_LIME          0xA7FF00
+# define LASER_LEMON          0xFFFF66
+
+# define KEY_ESC 0xff1b
+# define KEY_PLUS 0xffab
+# define KEY_MINUS 0xffad
+# define KEY_LEFT 0xff51
+# define KEY_RIGHT 0xff53
+# define KEY_UP 0xff52
+# define KEY_DOWN 0xff54
 
 typedef struct	s_complex
 {
@@ -67,6 +87,7 @@ typedef struct	s_fractal
 	double	zoom;
 	double	julia_x;
 	double	julia_y;
+	double	mouse;
 }				t_fractal;
 
 void		fractal_init(t_fractal *fractal);
