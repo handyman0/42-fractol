@@ -12,6 +12,11 @@
 
 #include "../include/fractol.h"
 
+static double	interpolate(double start, double end, double interpolation)
+{
+	return(start + ((end - start) * interpolation));
+}
+
 int	close_handler(t_fractal *fractal)
 {
 	mlx_destroy_image(fractal->mlx_connection, fractal->img.img_ptr);
@@ -43,24 +48,38 @@ int	key_handler(int keysym, t_fractal *fractal)
 
 int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 {
-	(void)x;
-	(void)y;
-	if (button == Button5)
-		fractal->zoom *= 0.95;
-	else if (button == Button4)
-		fractal->zoom *= 1.05;
-	fractal_render(fractal);
+	t_complex mouse;
+	double	interpolation;
+	double	zoom;
+
+	if (button == MOUSE_SCROLL_UP || button == MOUSE_SCROLL_DOWN)
+	{
+		mouse = init_complex(
+			(double)x / (WIDTH / (fractal->max.x - fractal->min.x))
+				+ fractal->min.x,
+			(double)y / (HEIGHT / (fractal->max.y - fractal->min.y))
+				* -1 + fractal->max.y);
+		if (button == Button5)
+			fractal->zoom *= 0.95;
+		else
+			fractal->zoom *= 1.05;
+		interpolation = 1.0 / fractal->zoom;
+		fractal->min.x = interpolate(mouse.x, fractal->min.x, interpolation);
+		fractal->min.y = interpolate(mouse.y, fractal->min.y, interpolation);
+		fractal->max.x = interpolate(mouse.x, fractal->max.x, interpolation);
+		fractal->max.y = interpolate(mouse.y, fractal->max.y, interpolation);
+		fractal_render(fractal);
+	}
 	return (0);
 }
 
 int julia_track(int x, int y, t_fractal *fractal)
 {
-	(void)x;
-	(void)y;
 	if(!ft_strncmp(fractal->name, "julia", 5))
 	{
-		fractal->julia_x = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
-		fractal->julia_y = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+		fractal->julia_k = init_complex(
+			4 * ((double)x / WIDTH - 0.5),
+			4 * ((double)(HEIGHT - y) / HEIGHT - 0.5));
 		fractal_render(fractal);
 	}
 	return (0);

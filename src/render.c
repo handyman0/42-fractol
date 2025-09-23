@@ -1,84 +1,103 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 06:10:50 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/20 23:28:48 by lmelo-do         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+/* render.c — correções mínimas para thread + pixel put */
 #include "../include/fractol.h"
+#include <pthread.h>
 
-static void	my_pixel_put(int x, int y, t_img *img, int color)
+/*
+ * Escreve 4 bytes do color.channel no buffer da img.
+ * Proteções: verifica limites via line_len e bits_per_pixel.
+ */
+static void my_pixel_put(int x, int y, t_img *img, t_color color)
 {
-	int offset;
+    unsigned char *buf;
+    size_t offset;
+    int bytes_per_pixel;
 
-	offset = (y * img->line_len) + (x * (img->bpp / 8));
-	*(unsigned int *)(img->pixel_ptr + offset) = color;
+    if (!img || !img->pixel_ptr)
+        return;
+    if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
+        return;
+
+    bytes_per_pixel = img->bits_per_pixel / 8;
+    offset = (size_t)y * (size_t)img->line_len + (size_t)x * (size_t)bytes_per_pixel;
+    buf = (unsigned char *)img->pixel_ptr;
+
+    /* Proteção extra: (não obrigatório, mas seguro)
+       se offset + bytes_per_pixel ultrapassar line_len*HEIGHT, abborta */
+    /* aqui assumimos buffer alocado corretamente pela mlx_new_image */
+
+    /* Escrita byte-a-byte (ordem dos canais depende do teu uso/endian) */
+    buf[offset + 0] = color.channel[0];
+    if (bytes_per_pixel > 1) buf[offset + 1] = color.channel[1];
+    if (bytes_per_pixel > 2) buf[offset + 2] = color.channel[2];
+    if (bytes_per_pixel > 3) buf[offset + 3] = color.channel[3];
 }
 
-static void mandel_or_julia(t_complex *z, t_complex *c, t_fractal *fractal)
+/*
+ * Função que cada thread vai executar.
+ * Assinatura compatível com pthread: void *fn(void *arg)
+ * Recebe um ponteiro para uma cópia de t_fractal (como você já fazia).
+ */
+static void *fractal_render_part(void *arg)
 {
-	if (!ft_strncmp(fractal->name, "julia", 5))
-	{
-		c->x = fractal->julia_x;
-		c->y = fractal->julia_y;
-	}
-	else
-	{
-		c->x = z->x;
-		c->y = z->y;
-	}
+    t_fractal *fractol;
+    int y;
+    int x;
+    t_color color;
+    int max_x;
+
+    fractol = (t_fractal *)arg;
+    if (!fractol)
+        return (NULL);
+
+    y = fractol->start_line;
+    max_x = WIDTH;
+    while (y < fractol->finish_line)
+    {
+        fractol->c.im = fractol->max.im - (double)y * fractol->factor.im;
+        x = 0;
+        while (x < max_x)
+        {
+            fractol->c.re = fractol->min.re + (double)x * fractol->factor.re;
+            color = get_color(fractol->formula(fractol), fractol);
+            my_pixel_put(x, y, &fractol->img, color);
+            x++;
+        }
+        y++;
+    }
+    return (NULL);
 }
 
-static void	handle_pixel(int x, int y, t_fractal *fractal)
+/*
+ * Função principal que cria/junta threads e desenha.
+ * Mantive a tua lógica de copiar struct pra cada thread.
+ */
+void fractal_render(t_fractal *fractal)
 {
-	t_complex z, c;
-	int color = WHITE;
-	double zx, zy, zx2, zy2;
-	int i = 0;
+    pthread_t threads[THREADS];
+    t_fractal fractols[THREADS];
+    int i;
 
-	z.x = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
-	z.y = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+    if (!fractal)
+        return;
 
-	mandel_or_julia(&z, &c, fractal);
+    fractal->factor = init_complex(
+        (fractal->max.re - fractal->min.re) / (WIDTH - 1),
+        (fractal->max.im - fractal->min.im) / (HEIGHT - 1));
 
-	zx = z.x;
-	zy = z.y;
-	zx2 = zx * zx;
-	zy2 = zy * zy;
-
-	while (i < fractal->iterations_definition && (zx2 + zy2) <= fractal->escape_value)
-	{
-		zy = 2 * zx * zy + c.y;
-		zx = zx2 - zy2 + c.x;
-		zx2 = zx * zx;
-		zy2 = zy * zy;
-		++i;
-	}
-	if (i < fractal->iterations_definition)
-		color = map(i, BLACK, WHITE, 0, fractal->iterations_definition);
-	my_pixel_put(x, y, &fractal->img, color);
-}
-
-void	fractal_render(t_fractal *fractal)
-{
-	int x;
-	int y;
-
-	y = 0;
-	while(y < HEIGHT)
-	{
-		x = 0;
-		while(x < WIDTH)
-		{
-			handle_pixel(x, y, fractal);
-			++x;
-		}
-		++y;
-	}
-	mlx_put_image_to_window(fractal->mlx_connection, fractal->mlx_window, fractal->img.img_ptr, 0, 0);
+    for (i = 0; i < THREADS; ++i)
+    {
+        fractols[i] = *fractal;
+        fractols[i].start_line = i * (HEIGHT / THREADS);
+        fractols[i].finish_line = (i + 1) * (HEIGHT / THREADS);
+        if (pthread_create(&threads[i], NULL, fractal_render_part, &fractols[i]) != 0)
+            terminate(ERR_TREADS);
+    }
+    for (i = 0; i < THREADS; ++i)
+    {
+        if (pthread_join(threads[i], NULL) != 0)
+            terminate(ERR_TREADS);
+    }
+    /* Depois que todas as threads terminaram, manda a imagem para a janela */
+    mlx_put_image_to_window(fractal->mlx_connection, fractal->mlx_window,
+                            fractal->img.img_ptr, 0, 0);
 }
