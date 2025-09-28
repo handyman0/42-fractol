@@ -6,43 +6,11 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:55:02 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/21 06:02:48 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:31:49 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
-
-static void	run_mandelbrot(void)
-{
-	t_fractal	fractal;
-
-	fractal.name = "mandelbrot";
-	fractal_init(&fractal);
-	fractal_render(&fractal);
-	mlx_loop(fractal.mlx_connection);
-}
-
-static void	run_celtic(void)
-{
-	t_fractal	fractal;
-
-	fractal.name = "celtic";
-	fractal_init(&fractal);
-	fractal_render(&fractal);
-	mlx_loop(fractal.mlx_connection);
-}
-
-static void	run_julia(char **argv)
-{
-	t_fractal	fractal;
-
-	fractal.name = "julia";
-	fractal.julia_x = ft_atodbl(argv[2]);
-	fractal.julia_y = ft_atodbl(argv[3]);
-	fractal_init(&fractal);
-	fractal_render(&fractal);
-	mlx_loop(fractal.mlx_connection);
-}
 
 int	main(int argc, char **argv)
 {
