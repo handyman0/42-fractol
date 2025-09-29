@@ -6,12 +6,14 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 19:30:03 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/28 19:42:39 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/29 03:51:45 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
+/* Executa o conjunto de Julia
+   z recebe o valor inicial de c */
 int	run_julia(t_fractal *fractal)
 {
 	int			iteration;
