@@ -6,7 +6,7 @@
 #    By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/17 05:20:06 by lmelo-do          #+#    #+#              #
-#    Updated: 2025/09/17 06:28:39 by lmelo-do         ###   ########.fr        #
+#    Updated: 2025/09/29 00:23:27 by lmelo-do         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,16 @@ INC_DIR = include
 LIBFT_DIR = libft
 MLX_DIR = minilibx-linux
 
-SRC = $(wildcard $(SRC_DIR)/*.c) # remove wildcard and use explicit files #
+SRC = $(SRC_DIR)/celtic.c \
+      $(SRC_DIR)/events.c \
+      $(SRC_DIR)/julia.c \
+      $(SRC_DIR)/mandelbrot.c \
+      $(SRC_DIR)/fractol.c \
+      $(SRC_DIR)/handle_pixel.c \
+      $(SRC_DIR)/math_utils.c \
+      $(SRC_DIR)/init.c \
+      $(SRC_DIR)/render.c
+
 OBJS = $(SRC:.c=.o)
 CC  = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)/include -I$(MLX_DIR)
@@ -27,7 +36,10 @@ MLX = $(MLX_DIR)/libmlx_Linux.a
 all: ${NAME}
 
 ${NAME}: ${OBJS} ${LIBFT} ${MLX}
-	${CC} ${OBJS} -o ${NAME} ${LIBFT} ${MLX} -lX11 -lXext -lm
+	${CC} ${CFLAGS} ${OBJS} -o ${NAME} ${LIBFT} ${MLX} -lX11 -lXext -lm
+
+%.o: %.c
+	${CC} ${CFLAGS} -c $< -o $@
 
 ${LIBFT}:
 	${MAKE} -C ${LIBFT_DIR}
@@ -35,7 +47,6 @@ ${LIBFT}:
 ${MLX}:
 	@if [ ! -d "${MLX_DIR}" ]; then \
 		echo ">> Desempacotando minilibx-linux..."; \
-		tar -xzf minilibx-linux.tgz; \
 	fi
 	${MAKE} -C ${MLX_DIR}
 
