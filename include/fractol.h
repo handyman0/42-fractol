@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:11:11 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/21 06:04:38 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/29 02:03:30 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <stdio.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
-
-# define ERROR_MESSAGE "Please enter \n\t ./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
 
 # define WIDTH 800
 # define HEIGHT 800
@@ -59,13 +57,13 @@
 # define KEY_UP 0xff52
 # define KEY_DOWN 0xff54
 
-typedef struct	s_complex
+typedef struct s_complex
 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 }				t_complex;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*img_ptr;
 	char	*pixel_ptr;
@@ -74,30 +72,35 @@ typedef struct	s_img
 	int		line_len;
 }				t_img;
 
-typedef struct	s_fractal
+typedef struct s_fractal
 {
-	char	*name;
-	void	*mlx_connection;
-	void	*mlx_window;
-	t_img	img;
-	double	escape_value;
-	int		iterations_definition;
-	double	shift_x;
-	double	shift_y;
-	double	zoom;
-	double	julia_x;
-	double	julia_y;
-	double	mouse;
+	char		*name;
+	void		*mlx_connection;
+	void		*mlx_window;
+	t_img		img;
+	double		escape_value;
+	int			iterations_definition;
+	double		shift_x;
+	double		shift_y;
+	double		zoom;
+	t_complex	c;
+	t_complex	k;
 }				t_fractal;
 
 void		fractal_init(t_fractal *fractal);
 void		fractal_render(t_fractal *fractal);
-double		map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
+double		map(double unscaled_num,
+				double new_min,
+				double new_max,
+				double old_max);
 t_complex	sum_complex(t_complex z1, t_complex z2);
 t_complex	square_complex(t_complex z);
 int			key_handler(int keysym, t_fractal *fractal);
 int			close_handler(t_fractal *fractal);
 int			mouse_handler(int button, int x, int y, t_fractal *fractal);
 int			julia_track(int x, int y, t_fractal *fractal);
+t_complex	init_complex(double x, double y);
+void		my_pixel_put(int x, int y, t_img *img, int color);
+void		handle_pixel(int x, int y, t_fractal *fractal);
 
 #endif
