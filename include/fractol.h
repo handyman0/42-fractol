@@ -6,7 +6,7 @@
 /*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:11:11 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/29 02:03:30 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/09/29 03:58:58 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,10 @@
 # define CYAN                 0x00FFFF
 # define ORANGE               0xFF5F1F
 # define VIVID_YELLOW         0xF7FF00
-# define ELECTRIC_INDIGO      0x6F00FF
 # define ACID_GREEN           0xB0FF1F
 # define NEON_ORANGE          0xFF6E00
 # define ULTRA_PINK           0xFF007F
 # define TURQUOISE            0x40E0D0
-# define TRIPPY_MAGENTA       0xFF00FF
 # define COSMIC_LIME          0xA7FF00
 # define LASER_LEMON          0xFFFF66
 
@@ -102,5 +100,8 @@ int			julia_track(int x, int y, t_fractal *fractal);
 t_complex	init_complex(double x, double y);
 void		my_pixel_put(int x, int y, t_img *img, int color);
 void		handle_pixel(int x, int y, t_fractal *fractal);
+int			run_mandelbrot(t_fractal *fractal);
+int			run_celtic(t_fractal *fractal);
+int			run_julia(t_fractal *fractal);
 
 #endif
