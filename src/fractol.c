@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lmelo-do <lmelo-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:55:02 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/29 02:01:16 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:02:51 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
+/*
+** main: Função principal do programa Fract'ol
+** 
+** Valida argumentos e inicia o fractal apropriado:
+**   - ./fractol mandelbrot
+**   - ./fractol celtic
+**   - ./fractol julia <real> <imaginário>
+** 
+** Parâmetros:
+**   - argc: Contador de argumentos
+**   - argv: Vetor de argumentos
+** 
+** Retorna:
+**   - 0 em sucesso, EXIT_FAILURE em erro
+*/
 int	main(int argc, char **argv)
 {
 	t_fractal	fractal;

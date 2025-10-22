@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   math_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lmelo-do <lmelo-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 06:22:35 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/28 22:47:58 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:32:29 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
+/*
+** map: Mapeia um valor de um intervalo para outro
+** 
+** Converte valores do domínio [0, old_max] para [new_min, new_max]
+** Usado para converter coordenadas de pixel para plano complexo
+** 
+** Parâmetros:
+**   - value: Valor a ser convertido
+**   - new_min: Novo mínimo do intervalo
+**   - new_max: Novo máximo do intervalo  
+**   - old_max: Antigo máximo do intervalo (mínimo é 0)
+** 
+** Retorna:
+**   - Valor convertido para novo intervalo
+*/
 double	map(double value,
 			double new_min,
 			double new_max,
@@ -23,24 +38,16 @@ double	map(double value,
 		+ new_min);
 }
 
-t_complex	sum_complex(t_complex z1, t_complex z2)
-{
-	t_complex	result;
-
-	result.x = z1.x + z2.x;
-	result.y = z1.y + z2.y;
-	return (result);
-}
-
-t_complex	square_complex(t_complex z)
-{
-	t_complex	result;
-
-	result.x = (z.x * z.x) - (z.y * z.y);
-	result.y = 2 * z.x * z.y;
-	return (result);
-}
-
+/*
+** init_complex: Inicializa número complexo com coordenadas x,y
+** 
+** Parâmetros:
+**   - x: Parte real
+**   - y: Parte imaginária
+** 
+** Retorna:
+**   - Estrutura t_complex inicializada
+*/
 t_complex	init_complex(double x, double y)
 {
 	t_complex	z;

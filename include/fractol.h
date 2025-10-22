@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lmelo-do <lmelo-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:11:11 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/29 03:58:58 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:51:26 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # define CYAN                 0x00FFFF
 # define ORANGE               0xFF5F1F
 # define VIVID_YELLOW         0xF7FF00
-# define ACID_GREEN           0xB0FF1F
 # define NEON_ORANGE          0xFF6E00
 # define ULTRA_PINK           0xFF007F
 # define TURQUOISE            0x40E0D0
@@ -98,10 +97,10 @@ int			close_handler(t_fractal *fractal);
 int			mouse_handler(int button, int x, int y, t_fractal *fractal);
 int			julia_track(int x, int y, t_fractal *fractal);
 t_complex	init_complex(double x, double y);
-void		my_pixel_put(int x, int y, t_img *img, int color);
+void		my_pixel_put(int x, int y, const t_img *img, int color);
 void		handle_pixel(int x, int y, t_fractal *fractal);
 int			run_mandelbrot(t_fractal *fractal);
-int			run_celtic(t_fractal *fractal);
-int			run_julia(t_fractal *fractal);
+int			run_celtic(const t_fractal *fractal);
+int			run_julia(const t_fractal *fractal);
 
 #endif

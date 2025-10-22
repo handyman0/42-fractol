@@ -3,23 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lmelo-do <lmelo-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 06:10:57 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/29 01:53:13 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:02:19 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
-/* converte coordenadas de pixel (x,y) -> ponto complexo (re,im)
-   mesma fórmula usada em render.c */
-static void	pixel_to_complex(t_fractal *f, int x, int y, t_complex *out)
+/*
+** pixel_to_complex: Converte coordenadas de pixel para plano complexo
+** 
+** Parâmetros:
+**   - f: Estrutura fractal (apenas leitura)
+**   - x, y: Coordenadas do pixel na tela
+**   - out: Ponteiro onde armazenar resultado complexo
+*/
+static void	pixel_to_complex(const t_fractal *f, int x, int y, t_complex *out)
 {
 	out->x = (map(x, -2.0, 2.0, WIDTH) * f->zoom) + f->shift_x;
 	out->y = (map(y, 2.0, -2.0, HEIGHT) * f->zoom) + f->shift_y;
 }
 
+/*
+** close_handler: Manipulador de fechamento da janela
+** 
+** Libera todos os recursos MLX e finaliza programa corretamente
+** 
+** Parâmetros:
+**   - fractal: Estrutura fractal a ser limpa
+** 
+** Retorna:
+**   - EXIT_SUCCESS
+*/
 int	close_handler(t_fractal *fractal)
 {
 	mlx_destroy_image(fractal->mlx_connection, fractal->img.img_ptr);
@@ -29,6 +46,21 @@ int	close_handler(t_fractal *fractal)
 	exit(EXIT_SUCCESS);
 }
 
+/*
+** key_handler: Manipulador de eventos de teclado
+** 
+** Teclas suportadas:
+**   - ESC: Fecha programa
+**   - Setas: Move visualização
+**   - +/-: Ajusta número de iterações
+** 
+** Parâmetros:
+**   - keysym: Código da tecla pressionada
+**   - fractal: Estrutura fractal a ser modificada
+** 
+** Retorna:
+**   - 0 (sucesso)
+*/
 int	key_handler(int keysym, t_fractal *fractal)
 {
 	if (keysym == KEY_ESC)
@@ -50,6 +82,20 @@ int	key_handler(int keysym, t_fractal *fractal)
 	fractal_render(fractal);
 	return (0);
 }
+
+/*
+** mouse_handler: Manipulador de eventos de mouse (zoom)
+** 
+** Implementa zoom suave centrado na posição do cursor
+** 
+** Parâmetros:
+**   - button: Botão do mouse (4=scroll up, 5=scroll down)
+**   - x, y: Posição do mouse na janela
+**   - fractal: Estrutura fractal a ser modificada
+** 
+** Retorna:
+**   - 0 (sucesso)
+*/
 
 int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 {
@@ -76,6 +122,20 @@ int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 	fractal_render(fractal);
 	return (0);
 }
+
+/*
+** julia_track: Rastreamento do mouse para Julia dinâmico
+** 
+** Atualiza a constante Julia em tempo real baseado na posição do mouse
+** Cria efeito de fractal "vivo" que responde ao movimento
+** 
+** Parâmetros:
+**   - x, y: Posição atual do mouse
+**   - fractal: Estrutura fractal a ser atualizada
+** 
+** Retorna:
+**   - 0 (sucesso)
+*/
 
 int	julia_track(int x, int y, t_fractal *fractal)
 {

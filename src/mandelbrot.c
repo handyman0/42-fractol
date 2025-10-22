@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmelo-do <lmelo-do@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lmelo-do <lmelo-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 19:30:10 by lmelo-do          #+#    #+#             */
-/*   Updated: 2025/09/29 00:18:55 by lmelo-do         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:12:59 by lmelo-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
+/*
+** run_mandelbrot: Calcula iterações para o conjunto de Mandelbrot
+** 
+** Fórmula clássica: z = z² + c
+** Testa se sequência permanece limitada para cada ponto c no plano complexo
+** 
+** Parâmetros:
+**   - fractal: Estrutura com dados do fractal
+** 
+** Retorna:
+**   - Número de iterações até divergência ou iterations_definition
+*/
 int	run_mandelbrot(t_fractal *fractal)
 {
 	int		iteration;
